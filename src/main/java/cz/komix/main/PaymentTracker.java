@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import cz.komix.file.ReadCsvFile;
 import cz.komix.thread.ReadFileThread;
@@ -25,17 +24,12 @@ public class PaymentTracker {
 	public List<String[]> dataPaymentRepository = null;
 	private static final String QUIT = "quit";
 	private static final String spliter = " ";
-	// pattern 3 char and space and number (first id 1-9, next 0-9)
-	Pattern patternRow = Pattern
-			.compile("([a-zA-Z]{3} (\\-)?(0|([1-9][0-9]*)))");
 
 	/**
 	 * Main of Payment tracker
 	 * 
-	 * @param args
-	 *            [0] - name of csv file
+	 * @param args[0] - name of csv file
 	 */
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		PaymentTracker pTracker = new PaymentTracker();
 		String fileName = "";
@@ -46,7 +40,7 @@ public class PaymentTracker {
 		ReadFileThread rft = new ReadFileThread(pTracker);
 		rft.start();
 		pTracker.readConsoleLine();
-		rft.stop();
+		rft.interrupt();
 	}
 
 	/**
@@ -75,10 +69,11 @@ public class PaymentTracker {
 			String line;
 			do {
 				line = consoleBufferReader.readLine();
-				if (patternRow.matcher(line).matches()) {
-					if (line.length() > 0 && !line.equalsIgnoreCase(QUIT)) {
+				if(line.equalsIgnoreCase(QUIT)) continue;
+				if (Validate.getInstance().isValidate(line)) {
+					if (line.length() > 0) {
 						getDataPaymentRepository().add(line.split(spliter));
-						displayData();
+						DataPaymentDisplay.getInstance().displayData(getDataPaymentRepository());
 					}
 				} else {
 					System.out

@@ -3,7 +3,6 @@ package cz.komix.currency;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Hashtable;
-import java.util.regex.Pattern;
 
 /**
  * Modul for Exchange Rates
@@ -34,10 +33,10 @@ public class CurrencyValue {
 	 */
 	private void initValue() {
 		this.hashtable = new Hashtable<String, Double>();
-		this.hashtable.put("HKD", new Double("45.6"));
-		this.hashtable.put("RMB", new Double("12.4"));
-		this.hashtable.put("KLM", new Double("1.8"));
-		this.hashtable.put("CZK", new Double("26.3"));
+		this.hashtable.put("HKD", new Double("9.26"));
+		this.hashtable.put("RMB", new Double("7.42"));
+		this.hashtable.put("EUR", new Double("0.82"));
+		this.hashtable.put("CZK", new Double("23.29"));
 	}
 
 	/**

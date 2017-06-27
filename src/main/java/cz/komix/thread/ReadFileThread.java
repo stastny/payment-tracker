@@ -30,7 +30,9 @@ public class ReadFileThread extends Thread {
 			synchronized (conditionVariable) {
 				try {
 					conditionVariable.wait(PRINT_INTERVAL_MILLIS);
-				} catch (final InterruptedException ignored) {
+				} catch (final InterruptedException end) {
+					// end Payment Tracker
+					return;
 				}
 			}
 		}

@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
+
+import cz.komix.main.Validate;
 
 /**
  * Reader csv files and parsing from List. The object is singleton.
@@ -23,10 +24,6 @@ public class ReadCsvFile {
 	public static ReadCsvFile getInstance() {
 		return INSTANCE;
 	}
-
-	// pattern 3 char and space and number (first id 1-9, next 0-9)
-	Pattern patternRow = Pattern
-			.compile("([a-zA-Z]{3} (\\-)?(0|([1-9][0-9]*)))");
 
 	/**
 	 * Method for read data from csv file
@@ -49,7 +46,7 @@ public class ReadCsvFile {
 
 			while ((line = bufReader.readLine()) != null) {
 				// controll data
-				if (patternRow.matcher(line).matches()) {
+				if (Validate.getInstance().isValidate(line)) {
 					// split and save to List
 					retval.add(line.split(cvsSplitBy));
 				} else {

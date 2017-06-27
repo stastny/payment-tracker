@@ -7,7 +7,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import cz.komix.currency.CurrencyValue;
 
@@ -25,8 +24,6 @@ public class DataPaymentDisplay {
 		return INSTANCE;
 	}
 
-	private Pattern patternValue = Pattern.compile("0|([1-9][0-9]*)");
-
 	/**
 	 * Make display data to console
 	 * 
@@ -40,19 +37,16 @@ public class DataPaymentDisplay {
 			log.info("Set " + data.size() + " rows.");
 			// suma of payments by currents
 			for (String[] dataPayments : data) {
-				if (patternValue.matcher(dataPayments[1]).matches()) {
-					hashData.put(
-							dataPayments[0],
-							((hashData.get(dataPayments[0]) != null) ? hashData
-									.get(dataPayments[0]) : new Double("0.0"))
+				if (Validate.getInstance().isValidateValue(dataPayments[1])) {
+					hashData.put(dataPayments[0], ((hashData.get(dataPayments[0]) != null) ? hashData.get(dataPayments[0]) : new Double("0.0"))
 									+ new Double(dataPayments[1]));
 				}
 			}
 			// prepare table from display to console
 			finalTable.append("Summary payments - 1.colum = currency, 2.column = suma of values, 3.column = Exchange Rates to USD");
 			finalTable.append("\n");
-			for (Enumeration e = hashData.keys(); e.hasMoreElements();) {
-				Object currency = e.nextElement();
+			for (Enumeration<String> enums = hashData.keys(); enums.hasMoreElements();) {
+				Object currency = enums.nextElement();
 				Object value = hashData.get(currency);
 				finalTable.append(currency);
 				finalTable.append("\t");
