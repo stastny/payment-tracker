@@ -76,13 +76,11 @@ public class PaymentTracker {
 						DataPaymentDisplay.getInstance().displayData(getDataPaymentRepository());
 					}
 				} else {
-					System.out
-							.println(line
-									+ " - is no good format - you have to write 3 character and space and number");
+					System.out.println(line	+ " - is no good format - you have to write 3 character and space and number");
 				}
 
 			} while (!line.equalsIgnoreCase(QUIT));
-
+			consoleBufferReader.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
